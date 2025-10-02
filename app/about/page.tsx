@@ -15,7 +15,7 @@ export default function AboutPage() {
               About BGMI Tournaments
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto">
-              India's premier platform for competitive BGMI and Free Fire gaming
+              India&apos;s premier platform for competitive BGMI and Free Fire gaming
             </p>
           </div>
         </section>
@@ -189,7 +189,7 @@ export default function AboutPage() {
                   <div>
                     <h3 className="text-xl font-bold text-secondary mb-2">Growing Community</h3>
                     <p className="text-gray-600">
-                      Join thousands of players and be part of India's fastest-growing gaming community.
+                      Join thousands of players and be part of India&apos;s fastest-growing gaming community.
                     </p>
                   </div>
                 </div>

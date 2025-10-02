@@ -104,7 +104,7 @@ export default function ViewRegistrations() {
     };
 
     fetchTournaments();
-  }, [user]);
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!user || !selectedTournament) return;
