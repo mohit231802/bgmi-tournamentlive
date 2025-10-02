@@ -380,7 +380,7 @@ export default function RegisterPage({ params }: { params: { id: string } }) {
             <p className="text-gray-600 mb-8">
               Fill in your {tournament?.mode?.toLowerCase() === 'solo' ? 'player' : 'team'} details to register for the tournament.
               <span className="block text-primary font-semibold mt-2">
-                Provide WhatsApp number - You'll receive tournament details 15 minutes before match starts!
+                Provide WhatsApp number - You&apos;ll receive tournament details 15 minutes before match starts!
               </span>
             </p>
 

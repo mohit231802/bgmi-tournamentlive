@@ -36,7 +36,7 @@ export default function TermsAndConditions() {
 
             <h2>1. Acceptance of Terms</h2>
             <p>
-              By accessing and using the BGMI Tournaments platform ("we", "us", or "our"), you accept and agree to be bound by the terms and provisions of this agreement.
+              By accessing and using the BGMI Tournaments platform (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;), you accept and agree to be bound by the terms and provisions of this agreement.
               If you do not agree to abide by the above, please do not use this service.
             </p>
 

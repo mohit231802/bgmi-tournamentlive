@@ -13,7 +13,7 @@ export default function Footer() {
               <span className="font-bold text-lg">BGMI Tournaments</span>
             </div>
             <p className="text-gray-300 text-sm">
-              India's premier platform for BGMI and Free Fire tournaments.
+              India&apos;s premier platform for BGMI and Free Fire tournaments.
               Join competitive gaming and win exciting prizes!
             </p>
           </div>
