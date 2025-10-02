@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
 
             <h2>1. Introduction</h2>
             <p>
-              Welcome to BGMI Tournaments ("we", "us", or "our"). We respect your privacy and are committed to protecting your personal data.
+              Welcome to BGMI Tournaments (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;). We respect your privacy and are committed to protecting your personal data.
               This privacy policy will inform you about how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.
             </p>
 
@@ -112,7 +112,7 @@ export default function PrivacyPolicy() {
               to protect your data during such transfers.
             </p>
 
-            <h2>10. Children's Privacy</h2>
+            <h2>10. Children&apos;s Privacy</h2>
             <p>
               Our services are intended for users 13 years and older. We do not knowingly collect personal information from children under 13.
               If you become aware that a child has provided us with personal information, please contact us immediately.
@@ -121,7 +121,7 @@ export default function PrivacyPolicy() {
             <h2>11. Changes to This Privacy Policy</h2>
             <p>
               We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page
-              and updating the "Last Updated" date.
+              and updating the &quot;Last Updated&quot; date.
             </p>
 
             <h2>12. Contact Us</h2>

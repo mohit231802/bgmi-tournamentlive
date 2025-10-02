@@ -114,7 +114,7 @@ export default function RulesPage() {
               </div>
               <div className="bg-red-50 border-l-4 border-red-500 p-4">
                 <p className="font-semibold text-red-700 mb-2">❌ Account Sharing</p>
-                <p className="text-sm text-gray-700">Using someone else's game account</p>
+                <p className="text-sm text-gray-700">Using someone else&apos;s game account</p>
               </div>
               <div className="bg-red-50 border-l-4 border-red-500 p-4">
                 <p className="font-semibold text-red-700 mb-2">❌ Slot Booking</p>
