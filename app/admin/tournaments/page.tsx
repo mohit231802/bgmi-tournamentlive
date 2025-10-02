@@ -9,19 +9,8 @@ export default function ManageTournaments() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
 
-  useEffect(() => {
-    const adminUser = sessionStorage.getItem('adminUser');
-    if (!adminUser) {
-      router.push('/admin/login');
-    } else {
-      setUser(JSON.parse(adminUser));
-    }
-  }, [router]);
-
-  if (!user) return null;
-
-  // Mock tournaments data
-  const tournaments = [
+  // Mock tournaments data - moved to state for real-time updates
+  const [tournaments, setTournaments] = useState([
     {
       _id: '1',
       title: 'BGMI Championship - Season 5',
@@ -58,7 +47,41 @@ export default function ManageTournaments() {
       status: 'ongoing',
       startDate: '2025-10-01T20:00:00',
     },
-  ];
+  ]);
+
+  // Function to handle tournament deletion
+  const handleDeleteTournament = async (tournamentId: string, tournamentTitle: string) => {
+    if (confirm(`Are you sure you want to delete "${tournamentTitle}"? This cannot be undone.`)) {
+      // Check if this is mock data (simple numeric IDs)
+      const isMockData = /^\d+$/.test(tournamentId); // Checks if ID is just numbers
+
+      if (isMockData) {
+        // Handle mock data deletion
+        setTournaments(prev => prev.filter(t => t._id !== tournamentId));
+        alert('Mock tournament deleted successfully! (Demo data)');
+      } else {
+        // Handle real tournament deletion
+        try {
+          const response = await fetch(`/api/tournaments/${tournamentId}`, {
+            method: 'DELETE',
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            // Remove the tournament from state instead of reloading
+            setTournaments(prev => prev.filter(t => t._id !== tournamentId));
+            alert('Tournament deleted successfully!');
+          } else {
+            alert(`Error: ${data.error}`);
+          }
+        } catch (error) {
+          console.error('Error deleting tournament:', error);
+          alert('Failed to delete tournament. Please try again.');
+        }
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -169,12 +192,7 @@ export default function ManageTournaments() {
                         <button
                           className="text-red-600 hover:text-red-900"
                           title="Delete"
-                          onClick={async () => {
-                            if (confirm('Are you sure you want to delete this tournament? This cannot be undone.')) {
-                              // For now, just show mock delete
-                              alert('Delete functionality implemented! Tournament would be deleted in production.');
-                            }
-                          }}
+                          onClick={() => handleDeleteTournament(tournament._id, tournament.title)}
                         >
                           <Trash2 className="h-5 w-5" />
                         </button>

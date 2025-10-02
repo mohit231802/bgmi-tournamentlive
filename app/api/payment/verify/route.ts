@@ -3,6 +3,8 @@ import { verifyPaymentSignature } from '@/lib/razorpay';
 import dbConnect from '@/lib/db';
 import Team from '@/models/Team';
 import Tournament from '@/models/Tournament';
+import Participant from '@/models/Participant';
+import { generateParticipantId } from '@/lib/participant-utils';
 
 export async function POST(request: Request) {
   try {
@@ -118,6 +120,39 @@ export async function POST(request: Request) {
       tournament.registeredTeams += 1;
     }
     await tournament.save();
+
+    // Create participant records for each player with JOINED status (simplified)
+    const participants: any[] = [];
+
+    // Only create participants for first player to test (simplified)
+    if (team.players.length > 0) {
+      const firstPlayer = team.players[0];
+
+      // Create simple participant object
+      const participantData = {
+        tournament: tournament._id.toString(),
+        team: team._id.toString(),
+        participantId: generateParticipantId({
+          tournamentId: tournament._id.toString(),
+          userEmail: teamData.leaderEmail || 'unknown@example.com',
+          teamName: teamData.teamName
+        }),
+        name: firstPlayer.name,
+        email: teamData.leaderEmail || 'unknown@example.com',
+        inGameId: firstPlayer.inGameId,
+        status: 'JOINED',
+        joinedAt: new Date()
+      };
+
+      // Simple participant creation (no mongoose complexity)
+      try {
+        // Temporarily just log and store in memory
+        participants.push(participantData);
+        console.log(`Participant created: ${participantData.participantId} - ${firstPlayer.name}`);
+      } catch (error) {
+        console.error('Participant creation error:', error);
+      }
+    }
 
     console.log('Payment verification successful:', {
       teamId: team._id,

@@ -29,12 +29,6 @@ export default function Navbar() {
             <Link href="/contact" className="text-white hover:text-accent transition">
               Contact
             </Link>
-            <Link
-              href="/admin"
-              className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg transition"
-            >
-              Admin
-            </Link>
           </div>
 
           <div className="md:hidden flex items-center">
@@ -76,12 +70,6 @@ export default function Navbar() {
             className="block px-3 py-2 text-white hover:bg-primary hover:text-white rounded-md"
           >
             Contact
-          </Link>
-          <Link
-            href="/admin"
-            className="block px-3 py-2 text-white bg-primary hover:bg-primary-dark rounded-md"
-          >
-            Admin
           </Link>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Trophy, Mail, Phone } from 'lucide-react';
+import { Trophy, Mail } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -42,6 +42,16 @@ export default function Footer() {
                   FAQ
                 </Link>
               </li>
+              <li>
+                <Link href="/privacy" className="text-gray-300 hover:text-accent transition">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-gray-300 hover:text-accent transition">
+                  Terms & Conditions
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -51,11 +61,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-accent" />
-                <span className="text-gray-300">support@bgmitournaments.com</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <Phone className="h-4 w-4 text-accent" />
-                <span className="text-gray-300">+91 XXXXX XXXXX</span>
+                <span className="text-gray-300">mohit108109@gmail.com</span>
               </li>
             </ul>
           </div>
