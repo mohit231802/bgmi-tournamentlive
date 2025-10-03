@@ -132,8 +132,7 @@ export async function DELETE(
   try {
     await dbConnect();
 
-    // Check if tournament has registrations
-    const tournament = await Tournament.findById(params.id);
+    const tournament = await Tournament.findByIdAndDelete(params.id);
 
     if (!tournament) {
       return NextResponse.json(
@@ -142,23 +141,15 @@ export async function DELETE(
       );
     }
 
-    if (tournament.registeredTeams > 0) {
-      return NextResponse.json(
-        { success: false, error: 'Cannot delete tournament with registrations' },
-        { status: 400 }
-      );
-    }
-
-    await Tournament.findByIdAndDelete(params.id);
-
     return NextResponse.json({
       success: true,
       message: 'Tournament deleted successfully',
+      id: params.id
     });
   } catch (error) {
     console.error('Delete tournament error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to delete tournament' },
+      { success: false, error: 'Failed to delete tournament. Please try again.' },
       { status: 500 }
     );
   }

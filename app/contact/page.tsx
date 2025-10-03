@@ -2,7 +2,7 @@
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Mail, Phone, MapPin, Trophy } from 'lucide-react';
+import { Mail, MapPin, Trophy } from 'lucide-react';
 
 export default function ContactPage() {
   return (
@@ -30,21 +30,14 @@ export default function ContactPage() {
                     <Mail className="h-6 w-6 text-primary mr-3" />
                     <div>
                       <h3 className="font-semibold text-gray-900">Email</h3>
-                      <p className="text-gray-600">mohit108109@gmail.com</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <Phone className="h-6 w-6 text-primary mr-3" />
-                    <div>
-                      <h3 className="font-semibold text-gray-900">Phone</h3>
-                      <p className="text-gray-600">+91 98765 43210</p>
+                      <p className="text-gray-600">mohitsharma5614r@gmail.com</p>
                     </div>
                   </div>
                   <div className="flex items-center">
                     <MapPin className="h-6 w-6 text-primary mr-3" />
                     <div>
                       <h3 className="font-semibold text-gray-900">Location</h3>
-                      <p className="text-gray-600">Mumbai, Maharashtra, India</p>
+                      <p className="text-gray-600">Soni, Madhya Pradesh, India</p>
                     </div>
                   </div>
                 </div>
@@ -141,7 +134,7 @@ export default function ContactPage() {
                   </div>
                   <div className="text-center">
                     <div className="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                      <Phone className="h-8 w-8" />
+                      <Trophy className="h-8 w-8" />
                     </div>
                     <h4 className="font-semibold text-secondary mb-2">Partnership</h4>
                     <p className="text-gray-600">Partner with us for tournaments and collaborations</p>

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { razorpay } from '@/lib/razorpay';
+import { createInstamojoClient, checkInstamojoConfig } from '@/lib/instamojo';
 import dbConnect from '@/lib/db';
 import Tournament from '@/models/Tournament';
 
@@ -41,36 +41,52 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log('Razorpay config:', {
-      key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      key_secret_exists: !!process.env.RAZORPAY_KEY_SECRET
-    });
+    // Check Instamojo configuration
+    checkInstamojoConfig();
 
-    // Create Razorpay order
-    const amount = tournament.entryFee * 100; // Amount in paise
-    console.log('Creating order with amount:', amount);
+    console.log('Instamojo config verified');
 
-    const order = await razorpay.orders.create({
-      amount,
-      currency: 'INR',
-      receipt: `receipt_${Date.now()}`,
-      notes: {
-        tournamentId,
-        teamName,
-        leaderEmail,
-        tournamentTitle: tournament.title,
-      },
-    });
+    // Create Instamojo payment request
+    const amount = tournament.entryFee; // Amount in rupees (Instamojo expects rupees, not paise)
+    const client = createInstamojoClient();
 
-    console.log('Order created successfully:', order.id);
+    const paymentData = {
+      purpose: `Tournament: ${tournament.title}`,
+      amount: amount.toString(),
+      buyer_name: teamName || 'Tournament Participant',
+      email: leaderEmail,
+      phone: '', // Optional
+      redirect_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3006'}/payment/success`,
+      webhook: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3006'}/api/payment/webhook`,
+      allow_repeated_payments: false,
+      send_email: true,
+      send_sms: false,
+      customer_nationality: 'IN',
+      terms_and_conditions: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3006'}/terms`,
+      shipping_address: {
+        line1: 'Tournament Registration',
+        city: 'Virtual',
+        state: 'Online',
+        zipcode: '000000',
+        country: 'India'
+      }
+    };
+
+    console.log('Creating Instamojo payment request with amount:', amount);
+
+    const response = await client.post('payment-requests/', paymentData);
+
+    console.log('Payment request created successfully:', response.data.id);
 
     return NextResponse.json({
       success: true,
       data: {
-        orderId: order.id,
-        amount: order.amount,
-        currency: order.currency,
-        keyId: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        paymentId: response.data.id,
+        paymentRequest: response.data,
+        longUrl: response.data.longurl,
+        shortUrl: response.data.shorturl,
+        amount: amount,
+        currency: 'INR',
       },
     });
   } catch (error: any) {

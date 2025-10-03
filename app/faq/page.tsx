@@ -30,12 +30,12 @@ const faqs: FAQ[] = [
   {
     category: 'Payment',
     question: 'What payment methods are accepted?',
-    answer: 'We accept all major payment methods including Credit/Debit Cards, UPI, Net Banking, and Wallets through our secure Razorpay payment gateway.',
+    answer: 'We accept all major payment methods including Credit/Debit Cards, UPI, Net Banking, and Wallets through Instamojo.',
   },
   {
     category: 'Payment',
     question: 'Is my payment information secure?',
-    answer: 'Yes, all payments are processed through Razorpay, a PCI DSS compliant payment gateway. We do not store any card or banking information on our servers.',
+    answer: 'Yes, all payments are processed through Instamojo which is PCI DSS compliant. We do not store any card or banking information on our servers.',
   },
   {
     category: 'Gameplay',

@@ -52,6 +52,11 @@ export default function Footer() {
                   Terms & Conditions
                 </Link>
               </li>
+              <li>
+                <Link href="/terms#refund-cancellation" className="text-gray-300 hover:text-accent transition">
+                  Refund & Cancellation
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -61,7 +66,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-accent" />
-                <span className="text-gray-300">mohit108109@gmail.com</span>
+                <span className="text-gray-300">mohitsharma5614r@gmail.com</span>
               </li>
             </ul>
           </div>

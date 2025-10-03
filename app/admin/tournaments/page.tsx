@@ -52,23 +52,26 @@ export default function ManageTournaments() {
   // Function to handle tournament deletion
   const handleDeleteTournament = async (tournamentId: string, tournamentTitle: string) => {
     if (confirm(`Are you sure you want to delete "${tournamentTitle}"? This cannot be undone.`)) {
-      // Handle real tournament deletion (since we're now fetching from database)
       try {
         const response = await fetch(`/api/tournaments/${tournamentId}`, {
           method: 'DELETE',
         });
 
+        if (!response.ok) {
+          throw new Error(`Failed to delete tournament: ${response.status}`);
+        }
+
         const data = await response.json();
 
         if (data.success) {
-          // Remove the tournament from state instead of reloading
+          // Remove tournament from local state after successful API deletion
           setTournaments(prev => prev.filter(t => t._id !== tournamentId));
           alert('Tournament deleted successfully!');
         } else {
-          alert(`Error: ${data.error}`);
+          throw new Error(data.error || 'Failed to delete tournament');
         }
       } catch (error) {
-        console.error('Error deleting tournament:', error);
+        console.error('Error in deletion process:', error);
         alert('Failed to delete tournament. Please try again.');
       }
     }

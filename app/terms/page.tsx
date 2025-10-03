@@ -77,7 +77,7 @@ export default function TermsAndConditions() {
             <h3>Entry Fees:</h3>
             <ul>
               <li>All entry fees are final and non-refundable</li>
-              <li>Payment processing handled securely through Razorpay</li>
+              <li>Payment processing handled securely through Instamojo</li>
               <li>Disputes regarding payment must be reported within 24 hours</li>
             </ul>
 
@@ -138,7 +138,7 @@ export default function TermsAndConditions() {
 
             <h3>Third-Party Services:</h3>
             <p>
-              Our platform integrates with BGMI, Razorpay, and other third-party services.
+              Our platform integrates with BGMI, Instamojo, and other third-party services.
               We are not responsible for their service performance or policies.
             </p>
 
@@ -175,19 +175,44 @@ export default function TermsAndConditions() {
               Continued use of our services signifies acceptance of updated terms.
             </p>
 
-            <h2>14. Governing Law</h2>
+            <h2 id="refund-cancellation">14. Refund and Cancellation Policy</h2>
+            <h3>Tournament Cancellations:</h3>
+            <ul>
+              <li>Participants may cancel their registration up to 48 hours before the tournament start time</li>
+              <li>Cancellation requests will result in a full refund of the entry fee</li>
+              <li>Late cancellations (less than 48 hours) are non-refundable</li>
+              <li>Tournaments cancelled by organizers will result in full refunds to all participants</li>
+            </ul>
+
+            <h3>Refund Processing:</h3>
+            <ul>
+              <li>All refunds will be processed within 7-10 business days after approval</li>
+              <li>Refunds will be transferred to the original payment method (bank account/UPI)</li>
+              <li>Processing fees (if any) will be deducted from the refund amount</li>
+              <li>All refunds are subject to verification of payment details</li>
+            </ul>
+
+            <h3>Non-Refundable Scenarios:</h3>
+            <ul>
+              <li>Participants who are disqualified due to violation of rules</li>
+              <li>Tournament participation fees after 48 hours from start time</li>
+              <li>Technical issues caused by participant devices</li>
+              <li>Account suspensions due to policy violations</li>
+            </ul>
+
+            <h2>15. Governing Law</h2>
             <p>
               These terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction
               of courts in India. All legal proceedings must be conducted in English.
             </p>
 
-            <h2>15. Contact Information</h2>
+            <h2>16. Contact Information</h2>
             <p>
               For questions about these terms or tournament participation:
             </p>
             <div className="bg-gray-50 p-4 rounded-lg mt-4">
-              <p><strong>Email:</strong> mohit108109@gmail.com</p>
-              <p><strong>Address:</strong> India</p>
+              <p><strong>Email:</strong> mohitsharma5614r@gmail.com</p>
+              <p><strong>Address:</strong> Soni, Madhya Pradesh, India</p>
             </div>
 
             <p className="mt-8 text-sm text-gray-600">

@@ -5,11 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { UserPlus, X } from 'lucide-react';
 
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
-}
+// Removed Razorpay global interface - now using Instamojo redirect flow
 
 export default function RegisterPage({ params }: { params: { id: string } }) {
   const [tournament, setTournament] = useState<any>(null);
@@ -233,96 +229,37 @@ export default function RegisterPage({ params }: { params: { id: string } }) {
       const responseData = await orderResponse.json();
 
       if (!responseData.success) {
-        alert(responseData.error || 'Failed to create order');
+        alert(responseData.error || 'Failed to create payment request');
         setLoading(false);
         return;
       }
 
-      // Razorpay options
-      const options = {
-        key: responseData.data.keyId,
-        amount: responseData.data.amount,
-        currency: responseData.data.currency,
-        name: 'BGMI Tournaments',
-        description: 'Tournament Registration Fee',
-        order_id: responseData.data.orderId,
-        handler: async function (response: any) {
-          // Verify payment - prepare correct data structure
-          console.log('Razorpay response:', response);
-          console.log('Preparing verification data...');
+      console.log('Payment request created:', responseData.data.paymentId);
 
-          const teamData: any = {
-            tournament: params.id,
-          };
-
-          if (tournament.mode?.toLowerCase() === 'solo') {
-            teamData.players = players.filter(p => p.name && p.inGameId); // Only send valid players with name and ID
-            teamData.leaderEmail = teamInfo.leaderEmail;
-            teamData.leaderWhatsApp = teamInfo.leaderWhatsApp;
-            teamData.leaderPhone = teamInfo.leaderPhone;
-
-            console.log('Solo mode - TeamData:', {
-              tournament: teamData.tournament,
-              playersCount: teamData.players?.length,
-              leaderEmail: teamData.leaderEmail
-            });
-          } else {
-            teamData.teamName = teamInfo.teamName;
-            teamData.leaderName = teamInfo.leaderName;
-            teamData.leaderEmail = teamInfo.leaderEmail;
-            teamData.leaderPhone = teamInfo.leaderPhone;
-            teamData.leaderWhatsApp = teamInfo.leaderWhatsApp;
-            teamData.players = players.filter(p => p.name && p.inGameId); // Only send valid players with name and ID
-
-            console.log('Team mode - TeamData:', {
-              tournament: teamData.tournament,
-              teamName: teamData.teamName,
-              leaderName: teamData.leaderName,
-              leaderEmail: teamData.leaderEmail,
-              leaderPhone: teamData.leaderPhone,
-              playersCount: teamData.players?.length
-            });
-          }
-
-          const verifyResponse = await fetch('/api/payment/verify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              teamData,
-            }),
-          });
-
-          const verifyData = await verifyResponse.json();
-
-          if (verifyData.success) {
-            const registrationType = tournament.mode?.toLowerCase() === 'solo' ? 'player' : 'team';
-            alert(`Payment successful! Your ${registrationType} is registered. You will receive tournament details on WhatsApp 15 minutes before match starts.`);
-            window.location.href = '/tournaments';
-          } else {
-            alert('Payment verification failed. Please contact support.');
-          }
-          setLoading(false);
-        },
-        prefill: {
-          name: teamInfo.leaderName,
-          email: teamInfo.leaderEmail,
-          contact: teamInfo.leaderPhone,
-        },
-        theme: {
-          color: '#ff6b35',
-        },
-        modal: {
-          ondismiss: function () {
-            setLoading(false);
-          },
-        },
+      // Save registration data temporarily (in a real app, you'd store in secure session/storage)
+      const teamData: any = {
+        tournament: params.id,
       };
 
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
+      if (tournament.mode?.toLowerCase() === 'solo') {
+        teamData.players = players.filter(p => p.name && p.inGameId);
+        teamData.leaderEmail = teamInfo.leaderEmail;
+        teamData.leaderWhatsApp = teamInfo.leaderWhatsApp;
+        teamData.leaderPhone = teamInfo.leaderPhone;
+      } else {
+        teamData.teamName = teamInfo.teamName;
+        teamData.leaderName = teamInfo.leaderName;
+        teamData.leaderEmail = teamInfo.leaderEmail;
+        teamData.leaderPhone = teamInfo.leaderPhone;
+        teamData.leaderWhatsApp = teamInfo.leaderWhatsApp;
+        teamData.players = players.filter(p => p.name && p.inGameId);
+      }
+
+      // Store team data temporarily for verification (simplified - real app should use secure storage)
+      sessionStorage.setItem('pendingPaymentTeamData', JSON.stringify(teamData));
+
+      // Redirect to Instamojo payment page
+      window.location.href = responseData.data.longUrl;
     } catch (error) {
       console.error('Error:', error);
       alert('An error occurred. Please try again.');

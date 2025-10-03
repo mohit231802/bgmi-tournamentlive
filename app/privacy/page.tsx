@@ -46,7 +46,7 @@ export default function PrivacyPolicy() {
               <li>Name and contact details (team leader information)</li>
               <li>Phone number and WhatsApp contact</li>
               <li>Email address</li>
-              <li>Payment information (processed securely through Razorpay)</li>
+              <li>Payment information (processed securely through our online payment gateway)</li>
               <li>Gaming ID and username</li>
               <li>Team member information</li>
             </ul>
@@ -72,7 +72,7 @@ export default function PrivacyPolicy() {
             <h2>4. Data Sharing and Disclosure</h2>
             <p>We do not sell, trade, or otherwise transfer your personal information to third parties except:</p>
             <ul>
-              <li>With payment processors (Razorpay) for transaction processing</li>
+              <li>With Instamojo for transaction processing</li>
               <li>When required by law or legal process</li>
               <li>To protect our rights, property, or safety</li>
               <li>With service providers for website operation (hosting, analytics)</li>
@@ -81,7 +81,7 @@ export default function PrivacyPolicy() {
             <h2>5. Data Security</h2>
             <p>
               We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure,
-              or destruction. Our payment processing is handled by Razorpay, which uses industry-standard encryption and security practices.
+              or destruction. Our payment processing is handled by Instamojo, which uses industry-standard encryption and security practices.
             </p>
 
             <h2>6. Cookie Policy</h2>
@@ -129,8 +129,8 @@ export default function PrivacyPolicy() {
               If you have any questions about this privacy policy or our privacy practices, please contact us:
             </p>
             <div className="bg-gray-50 p-4 rounded-lg mt-4">
-              <p><strong>Email:</strong> mohit108109@gmail.com</p>
-              <p><strong>Address:</strong> India</p>
+              <p><strong>Email:</strong> mohitsharma5614r@gmail.com</p>
+              <p><strong>Address:</strong> Soni, Madhya Pradesh, India</p>
             </div>
 
             <p className="mt-8 text-sm text-gray-600">
