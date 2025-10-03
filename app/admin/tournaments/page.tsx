@@ -8,80 +8,81 @@ import { ArrowLeft, Edit, Trash2, Plus, Eye, Users } from 'lucide-react';
 export default function ManageTournaments() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
+  const [tournaments, setTournaments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Mock tournaments data - moved to state for real-time updates
-  const [tournaments, setTournaments] = useState([
-    {
-      _id: '1',
-      title: 'BGMI Championship - Season 5',
-      game: 'BGMI',
-      mode: 'Squad',
-      prizePool: 50000,
-      entryFee: 100,
-      maxTeams: 100,
-      registeredTeams: 67,
-      status: 'upcoming',
-      startDate: '2025-10-15T10:00:00',
-    },
-    {
-      _id: '2',
-      title: 'Free Fire Duo Rush',
-      game: 'FreeFire',
-      mode: 'Duo',
-      prizePool: 25000,
-      entryFee: 50,
-      maxTeams: 50,
-      registeredTeams: 42,
-      status: 'upcoming',
-      startDate: '2025-10-08T18:00:00',
-    },
-    {
-      _id: '3',
-      title: 'BGMI Solo Daily Rush',
-      game: 'BGMI',
-      mode: 'Solo',
-      prizePool: 10000,
-      entryFee: 30,
-      maxTeams: 100,
-      registeredTeams: 85,
-      status: 'ongoing',
-      startDate: '2025-10-01T20:00:00',
-    },
-  ]);
+  // Check admin authentication
+  useEffect(() => {
+    const adminUser = sessionStorage.getItem('adminUser');
+    if (!adminUser) {
+      router.push('/admin/login');
+    } else {
+      setUser(JSON.parse(adminUser));
+    }
+  }, [router]);
+
+  // Fetch tournaments from database
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchTournaments = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/tournaments');
+        const data = await response.json();
+
+        if (data.success) {
+          setTournaments(data.data);
+        } else {
+          console.error('Failed to fetch tournaments:', data.error);
+          // Fallback to empty array if API fails
+          setTournaments([]);
+        }
+      } catch (error) {
+        console.error('Error fetching tournaments:', error);
+        setTournaments([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTournaments();
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Function to handle tournament deletion
   const handleDeleteTournament = async (tournamentId: string, tournamentTitle: string) => {
     if (confirm(`Are you sure you want to delete "${tournamentTitle}"? This cannot be undone.`)) {
-      // Check if this is mock data (simple numeric IDs)
-      const isMockData = /^\d+$/.test(tournamentId); // Checks if ID is just numbers
+      // Handle real tournament deletion (since we're now fetching from database)
+      try {
+        const response = await fetch(`/api/tournaments/${tournamentId}`, {
+          method: 'DELETE',
+        });
 
-      if (isMockData) {
-        // Handle mock data deletion
-        setTournaments(prev => prev.filter(t => t._id !== tournamentId));
-        alert('Mock tournament deleted successfully! (Demo data)');
-      } else {
-        // Handle real tournament deletion
-        try {
-          const response = await fetch(`/api/tournaments/${tournamentId}`, {
-            method: 'DELETE',
-          });
+        const data = await response.json();
 
-          const data = await response.json();
-
-          if (data.success) {
-            // Remove the tournament from state instead of reloading
-            setTournaments(prev => prev.filter(t => t._id !== tournamentId));
-            alert('Tournament deleted successfully!');
-          } else {
-            alert(`Error: ${data.error}`);
-          }
-        } catch (error) {
-          console.error('Error deleting tournament:', error);
-          alert('Failed to delete tournament. Please try again.');
+        if (data.success) {
+          // Remove the tournament from state instead of reloading
+          setTournaments(prev => prev.filter(t => t._id !== tournamentId));
+          alert('Tournament deleted successfully!');
+        } else {
+          alert(`Error: ${data.error}`);
         }
+      } catch (error) {
+        console.error('Error deleting tournament:', error);
+        alert('Failed to delete tournament. Please try again.');
       }
     }
   };
+
+  if (!user) return null;
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg font-semibold">Loading tournaments...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
