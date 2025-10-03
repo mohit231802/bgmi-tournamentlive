@@ -59,17 +59,12 @@ export async function GET() {
 
     return NextResponse.json({ success: true, data: tournaments });
   } catch (error) {
-    console.log('📝 Database unavailable, using demo data...');
-
-    // Fallback to cached mock data for fast response
-    const mockTournaments = getMockTournaments();
-
-    console.log(`✅ Returned ${mockTournaments.length} demo tournaments`);
+    console.log('📝 Database unavailable, no tournaments to display.');
 
     return NextResponse.json({
       success: true,
-      data: mockTournaments,
-      note: 'Demo data mode - database connection unavailable'
+      data: [],
+      note: 'No tournaments available - database connection issue'
     });
   }
 }
@@ -84,26 +79,10 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Tournament creation database error:', error);
 
-    // For demo purposes, simulate successful creation even when database is down
-    console.log('Tournament creation attempted:', body);
-
-    const mockTournament = {
-      _id: `mock-${Date.now()}`,
-      ...body,
-      startDate: new Date(body.startDate),
-      endDate: new Date(body.endDate),
-      createdAt: new Date(),
-      status: 'upcoming',
-      registeredTeams: 0,
-      registeredPlayers: 0,
-    };
-
-    console.log('Simulating successful tournament creation:', mockTournament.title);
-
     return NextResponse.json({
-      success: true,
-      data: mockTournament,
-      note: 'Tournament created successfully (demo mode - database unavailable)'
-    }, { status: 201 });
+      success: false,
+      error: 'Database connection unavailable. Please try again later.',
+      note: 'Tournament creation failed - unable to connect to database'
+    }, { status: 500 });
   }
 }

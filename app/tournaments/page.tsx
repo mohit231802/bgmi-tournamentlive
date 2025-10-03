@@ -49,7 +49,7 @@ const mockTournaments = [
 ];
 
 export default function TournamentsPage() {
-  const [tournaments, setTournaments] = useState([]);
+  const [tournaments, setTournaments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [gameFilter, setGameFilter] = useState('All');
@@ -77,8 +77,8 @@ export default function TournamentsPage() {
     fetchTournaments();
   }, []);
 
-  // Use real data if loaded, otherwise fallback to mock
-  const tournamentData = tournaments.length > 0 ? tournaments : mockTournaments;
+  // Use only real data from database (no demo fallbacks)
+  const tournamentData = tournaments;
 
   // Filter tournaments based on current filters
   const filteredTournaments = tournamentData.filter((tournament) => {
@@ -312,6 +312,19 @@ export default function TournamentsPage() {
                   </div>
                 </div>
               ))
+            ) : tournamentData.length === 0 ? (
+              <div className="col-span-full text-center py-12">
+                <Calendar className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                <div className="text-gray-500 text-lg mb-2">
+                  No tournaments available yet.
+                </div>
+                <div className="text-gray-400 text-sm">
+                  Tournament listings will appear here once events are announced.
+                </div>
+                <div className="text-xs text-gray-300 mt-4">
+                  Stay tuned for upcoming tournaments!
+                </div>
+              </div>
             ) : (
               <div className="col-span-full text-center py-12">
                 <div className="text-gray-500 text-lg">
