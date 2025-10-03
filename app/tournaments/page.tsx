@@ -3,7 +3,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import { Calendar, Users, Trophy, IndianRupee } from 'lucide-react';
+import { Calendar, Users, Trophy, IndianRupee, MapPin } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 // Fallback in case API fails - using real tournament IDs from database
@@ -271,6 +271,12 @@ export default function TournamentsPage() {
                         <IndianRupee className="h-5 w-5 text-primary mr-2" />
                         <span className="font-semibold">Entry Fee:</span>
                         <span className="ml-2">₹{tournament.entryFee}</span>
+                      </div>
+
+                      <div className="flex items-center text-gray-600">
+                        <MapPin className="h-5 w-5 text-primary mr-2" />
+                        <span className="font-semibold">Map Type:</span>
+                        <span className="ml-2">{tournament.mapType || 'Not specified'}</span>
                       </div>
 
                       <div className="flex items-center text-gray-600">
